@@ -5,11 +5,11 @@
 
 ## 도움 (Help)
 
-- Structs2는 Java 기반 웹 애플리케이션 프레임워크로, 폼 데이터 처리, 요청-응답 흐름 관리 같은 웹 개발을 쉽게 해주는 도구구다. 한때 대규모 기업, 공공기관 시스템에 널리 사용됐다.
+- Struts2는 Java 기반 웹 애플리케이션 프레임워크로, 폼 데이터 처리, 요청-응답 흐름 관리 같은 웹 개발을 쉽게 해주는 도구다. 한때 대규모 기업, 공공기관 시스템에 널리 사용됐다.
 
 - OGNL이란 Object-Graph Navigation Language의 약자로, Java 객체 안의 값 조회, 수정, 메소드 호출을 표현식(Expression)으로 간단하게 할 수 있게 해주는 언어다. 원래는 개발 편의를 위해 쓰였지만, 검증 없이 사용하면 코드 실행 취약점으로 이어질 수 있다.
 
-- 요즘 Java 웹 개발은 대부분 Spring Boot/Spring MVC로 진행된다. 그러나 과거 대규모 시스템에 많이 쓰였기 때문에, 여전히 레거시 시스템(공공기관, 금융권 등)에서 Struts2 기반 서버가 운영 중일 수 있다다. 따라서 Struts2의 취약점을 알아두는 것은 충분히 당신에게 도움이 될 것이다.
+- 요즘 Java 웹 개발은 대부분 Spring Boot/Spring MVC로 진행된다. 그러나 과거 대규모 시스템에 많이 쓰였기 때문에, 여전히 레거시 시스템(공공기관, 금융권 등)에서 Struts2 기반 서버가 운영 중일 수 있다. 따라서 Struts2의 취약점을 알아두는 것은 충분히 당신에게 도움이 될 것이다.
 
 <br/>
 
@@ -44,7 +44,7 @@
 ## PoC
 
 ```
-# Put a malicious OGML expression into the Content-Type Header
+# Put a malicious OGNL expression into the Content-Type Header
 payload = "%{(#context['com.opensymphony.xwork2.dispatcher.HttpServletResponse'].addHeader('vulhub',233*233))}.multipart/form-data"
 ```
 
@@ -62,6 +62,6 @@ payload = "%{(#context['com.opensymphony.xwork2.dispatcher.HttpServletResponse']
 
 ## 정리 (Conclusion)
 
-- CVE-2017-5638은 사용자가 서버에 전달한 Content-Type 헤더 값에 삽입한 OGNL 표현식이 서버 측에서 검증 없이 실행되기 때문에 발생한다. 이로 인해 공격자가 서버에서 임의의 코드를 실행하는 것이 허용되며며, 서버 장악, 데이터 탈취, 시스템 파괴 등의의 피해로 이어질 수 있다.
+- CVE-2017-5638은 사용자가 서버에 전달한 Content-Type 헤더 값에 삽입한 OGNL 표현식이 서버 측에서 검증 없이 실행되기 때문에 발생한다. 이로 인해 공격자가 서버에서 임의의 코드를 실행하는 것이 허용되며, 서버 장악, 데이터 탈취, 시스템 파괴 등의 피해로 이어질 수 있다.
 
-- 안전한 웹 서비스 운영을 위해서는 서버 개발자가 또는 라이브러리, 프레임워크 설계자가 사용자의의 입력을 그대로 코드로 해석하지 않도록 주의해야 한다. 불필요한 코드 실행 경로를 없애거나 입력값을 무해화(Sanitization)하여 처리해야 한다.
+- 안전한 웹 서비스 운영을 위해서는 서버 개발자가 또는 라이브러리, 프레임워크 설계자가 사용자의 입력을 그대로 코드로 해석하지 않도록 주의해야 한다. 불필요한 코드 실행 경로를 없애거나 입력값을 무해화(Sanitization)하여 처리해야 한다.

